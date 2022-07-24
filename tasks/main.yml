@@ -1,0 +1,8 @@
+---
+# tasks file for roles/asterr_stage_0
+- name: Install rosetta on m1
+  command: >
+    softwareupdate
+    --install-rosetta
+    --agree-to-license
+  when: ansible_machine == 'arm64'
