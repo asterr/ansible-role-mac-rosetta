@@ -1,8 +1,14 @@
 ---
 # tasks file for roles/asterr_stage_0
+- name: Is rosetta installed?
+  shell: pgrep oahd
+  ignore_errors: yes
+  changed_when: false
+  register: service_rosetta_status
+
 - name: Install rosetta on m1
   command: >
     softwareupdate
     --install-rosetta
     --agree-to-license
-  when: ansible_machine == 'arm64'
+  when: (ansible_machine == 'arm64') and (service_rosetta_status.rc != 0)
